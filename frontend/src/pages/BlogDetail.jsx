@@ -2,16 +2,18 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api/api"; // axios instance
+
 export default function BlogDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await api.get(` `);
+        const res = await api.get(`/api/blogs/${id}`);
         setBlog(res.data);
       } catch (err) {
         console.error("Error fetching blog:", err);
@@ -20,8 +22,10 @@ export default function BlogDetail() {
         setLoading(false);
       }
     };
+
     fetchBlog();
   }, [id]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-10">
@@ -29,6 +33,7 @@ export default function BlogDetail() {
       </div>
     );
   }
+
   if (error) {
     return (
       <div className="flex justify-center items-center py-10">
@@ -36,6 +41,7 @@ export default function BlogDetail() {
       </div>
     );
   }
+
   return (
     <div className="p-6 max-w-3xl mx-auto">
       <button
@@ -44,6 +50,7 @@ export default function BlogDetail() {
       >
         ← Back to Home
       </button>
+
       {blog?.image && (
         <img
           src={blog.image}

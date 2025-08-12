@@ -44,8 +44,7 @@ export default function AdminHome() {
    */
   const fetchBlogs = async () => {
     try {
-      const res = await api.get(""); // Add API endpoint
-
+      const res = await api.get("/api/blogs");
       setBlogs(res.data);
     } catch (err) {
       console.error("Error fetching blogs:", err);
@@ -61,10 +60,9 @@ export default function AdminHome() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
     try {
-      await api.delete(``, {
+      await api.delete(`/api/blogs/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
-      }); // Add API endpoint
-
+      });
       setBlogs(blogs.filter((b) => b._id !== id));
     } catch (err) {
       console.error("Error deleting blog:", err);
@@ -103,14 +101,14 @@ export default function AdminHome() {
     try {
       if (editId) {
         // Update existing blog
-        await api.put(``, formData, {
+        await api.put(`/api/blogs/${editId}`, formData, {
           headers: { Authorization: `Bearer ${token}` },
-        }); // Add API endpoint
+        });
       } else {
         // Create new blog
-        await api.post(" ", formData, {
+        await api.post("/api/blogs", formData, {
           headers: { Authorization: `Bearer ${token}` },
-        }); // Add API endpoint
+        });
       }
       setModalOpen(false);
       fetchBlogs(); // Refresh blogs list

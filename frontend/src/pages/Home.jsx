@@ -93,7 +93,7 @@ export default function Home() {
             >
               Read More
             </Link>
-          </div>
+          </div>{" "}
         </div>
       ))}
     </div>
