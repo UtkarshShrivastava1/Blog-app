@@ -7,10 +7,13 @@ const {
   deleteBlog,
 } = require("../controller/blogController");
 
+//verifyAdminToken
+const verifyAdminToken = require("../middleware/auth");
+
 const router = express.Router();
 router.get("/", getAllBlogs);
 router.get("/:id", getBlogById);
-router.post("/", createBlog);
+router.post("/", verifyAdminToken, createBlog);
 router.put("/:id", updateBlog);
 router.delete("/:id", deleteBlog);
 
